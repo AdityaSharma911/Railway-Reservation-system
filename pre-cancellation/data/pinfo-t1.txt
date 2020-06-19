@@ -1,0 +1,8 @@
+1		naksh		m		2420		1265.00
+2		vasu		m		2420		1265.00
+3		nakshatra		m		2420		1265.00
+4		vasu		m		2420		1265.00
+5		nakshatra		m		2420		1265.00
+6		vasu		m		2420		1265.00
+7		michel		f		2420		1265.00
+8		barry		m		2420		1265.00

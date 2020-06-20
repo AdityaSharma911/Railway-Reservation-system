@@ -405,20 +405,7 @@ else
 	pd passdetails;
 	FILE *fp;
 	system("cls");
-    // fgo=1265;
-    // fpra=875;
-    // fluc=1589;
-    // fmew=830;
-    // fjab=650;
-    // fsha=800;
-    // fdur=1400;
-    // sgo=130;
-    // spra=120;
-    // sluc=150;
-    // smew=100;
-    // sjab=120;
-    // ssha=140;
-    // sdur=190;
+
 
 
 	//error here have to take input of the name
@@ -447,63 +434,7 @@ struct train
 
 struct train t[10];
 
-// //structure initialization
-// //t1=gomti express
-// strcpy(t[1].tname,"Gomti Express");
-// t[1].ttime=0500;
-// t[1].tseats=NULL;
-// t[1].fpp=fgo;
-// t[1].pnr=1;
-// strcpy(t[1].source,"NDLS");
-// strcpy(t[1].destination,"Lucknow");
 
-// strcpy(t[2].tname,"Pragraj Express");
-// t[2].ttime=0616;
-// t[2].tseats=NULL;
-// t[2].fpp=fpra;
-// t[2].pnr=1;
-// strcpy(t[2].source,"NDLS");
-// strcpy(t[2].destination,"Prayagraj");
-
-// strcpy(t[3].tname,"Mewar Express");
-// t[3].ttime=1620;
-// t[3].tseats=NULL;
-// t[3].fpp=fmew;
-// t[3].pnr=1;
-// strcpy(t[3].source,"H.Nizzamuddin");
-// strcpy(t[3].destination,"Udaipur");
-
-// strcpy(t[4].tname,"Jabalpur Express");
-// t[4].ttime=1815;
-// t[4].tseats=NULL;
-// t[4].fpp=fjab;
-// t[4].pnr=1;
-// strcpy(t[4].source,"H.Nizzamuddin");
-// strcpy(t[4].destination,"Jabalpur");
-
-// strcpy(t[5].tname,"Lucknow Mail");
-// t[5].ttime=1900;
-// t[5].tseats=NULL;
-// t[5].fpp=fluc;
-// t[5].pnr=1;
-// strcpy(t[5].source,"NDLS");
-// strcpy(t[5].destination,"Lucknow");
-
-// strcpy(t[6].tname,"Shalimar Express");
-// t[6].ttime=2310;
-// t[6].tseats=NULL;
-// t[6].fpp=fsha;
-// t[6].pnr=1;
-// strcpy(t[6].source,"H.Nizamuddin");
-// strcpy(t[6].destination,"Mumbai");
-
-// strcpy(t[7].tname,"Duranto");
-// t[7].ttime=2350;
-// t[7].tseats=NULL;
-// t[7].fpp=fdur;
-// t[7].pnr=1;
-// strcpy(t[7].source,"NDLS");
-// strcpy(t[7].destination,"Patna");
 
 
 

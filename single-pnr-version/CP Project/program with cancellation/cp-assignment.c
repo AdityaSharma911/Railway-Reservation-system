@@ -496,7 +496,7 @@ printf("Fare per person is:%d \n",t[sn].fpp);
         printf("Gender(M/F):");
         scanf("%c",&passdetails.gender);
         printf("Your PNR is: %d",passdetails.pnr);
-        fprintf(fp,"%d\t\t%s\t\t%c\t\t%d\t\t%.2f\n",passdetails.pnr,passdetails.name,passdetails.gender,passdetails.train_num,charges);
+        fprintf(fp,"%d\t%s\t%c\t%d\t%.2f\n",passdetails.pnr,passdetails.name,passdetails.gender,passdetails.train_num,charges);
         passdetails.pnr++;
 	}
 
@@ -542,30 +542,32 @@ struct passenger{//struct to store passenger ticket data
 };
 struct passenger p;
 
-struct passenger getCancelledTicketData(int pnr, char filename[]);
-int getSrNo(int InputTrainNo);
-void getPinfoFile(char *filename, int srNo);
-void updatePinfo(struct passenger p, char filename[]);
+struct passenger getCancelledTicketData(int pnr, char filename[]);//function to get data of cancelled ticket
+int getSrNo(int InputTrainNo);//gets the serial number of the train
+void updatePinfo(struct passenger p, char filename[]);//removes entry from pinfo.txt
 
 void cancel(void){
 	int InputTrainNo;
-	printf("Enter train no: ");
+	tinfo();
+	printf("\nEnter train no: ");
 	scanf("%d", &InputTrainNo);
 	int srNo;
-	srNo = getSrNo(InputTrainNo);
-	if(srNo>0){
+	srNo = getSrNo(InputTrainNo);//gets the serial number of the train
+	if(srNo>0){//error if srNo <=  0
 	char filename[20];
-	getPinfoFile(filename, srNo);
+	strcpy(filename, "./data/pinfo.txt");//filename = "./data/pinfo.txt"
 	printf("Enter PNR number: ");
 	int pnr;
 	scanf("%d", &pnr);
 	p = getCancelledTicketData(pnr, filename);
 	if(p.pnr<0){//shows error if invalid PNR entered
 		printf("Error: Invalid PNR\n");
+		getch();//holds screen
 	}else{
 		updatePinfo(p, filename);//ticket entry removed from pinfo.txt
 		printf("YOU HAVE SUCCESSFULLY CANCELLED A TICKET!\nREFUNDED AMOUNT: %.2f\n", (float)p.cost/2);//shows refunded amount
-		seatsinc(srNo, 1);
+		getch();//holds screen
+		seatsinc(srNo, 1);//increments a seat
 	}
 }
 
@@ -577,7 +579,7 @@ int getSrNo(int InputTrainNo){
 	char buffer[15];
 	int srNo, tno;
 
-	while(fgets(buffer,14,fp)){
+	while(fgets(buffer,14,fp)){//reads lines from tinfo1.txt and if train number matches returns serial number
 		char* token = strtok(buffer, "\t");
 		srNo = atoi(token);
 		token = strtok(NULL, "\t");
@@ -589,7 +591,7 @@ int getSrNo(int InputTrainNo){
 		}
 	}
 	fclose(fp);
-	printf("Invalid train number\n");
+	printf("Invalid train number\n");//if invalid train number is entered
 	return -1;
 }
 
@@ -620,14 +622,6 @@ struct passenger getCancelledTicketData(int pnr, char filename[]){
 	}
 	p.pnr=-1;//if pnr input by user is not present in pinfo.txt, returns p.pnr = -1 to show error
 	return p;
-}
-
-void getPinfoFile(char *filename, int srNo){
-	strcpy(filename, "./data/pinfo-t");
-	char serialNo[5];
-	itoa(srNo, serialNo, 10);
-	strcat(filename, serialNo);
-	strcat(filename, ".txt");
 }
 
 void updatePinfo(struct passenger p, char filename[]){

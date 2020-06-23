@@ -13,5 +13,6 @@ This project was made by:
 >		Made the reservation menu, tinfo, ainfo, login function and main function of the program. 
 2.	Nakshatra Vasu (2019B4PS0774P)
 >		Made and implemented pnr-assigner, seats-dec and seats-inc functions and modified reservation function to read data from database.
-3.	Shreyas Panyam(2019B4PS0183)
+3.	Shreyas Panyam(2019B4PS0183P)
+>		Made and implemented the cancellation menu,including the function to read the serial number of the trains and passenger data from the database, and the function to remove entries from the passenger database.
 

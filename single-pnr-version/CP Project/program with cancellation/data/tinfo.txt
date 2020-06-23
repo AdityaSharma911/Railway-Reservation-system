@@ -1,7 +1,7 @@
 Sr.no.		Train Number	From			To			Train Name      		Time		Fare(in RS.)	Total Seats
 ___________________________________________________________________________________________________________________________________________________________
 
-1		2420		New Delhi    		Lucknow  		Gomti Express   		05:00		1265		128
+1		2420		New Delhi    		Lucknow  		Gomti Express   		05:00		1265		127
 2		2418		NDLS         		Prayagraj		Pragraj Express 		06:16		875 		118
 3		2963		H. Nizamuddin		Udaipur  		Mewar Express   		16:20		830 		100
 4		2182		H. Nizamuddin		Jabalpur 		Jabalpur Express		18:15		650 		120

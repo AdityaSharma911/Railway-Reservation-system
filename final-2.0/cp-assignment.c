@@ -623,7 +623,7 @@ struct passenger getCancelledTicketData(int pnr, char filename[]){
 	char str[100];//buffer to store lines from pinfo.txt
 	while(fgets(str,99,fp)){//gets lines from pinfo.txt until loop breaks
     i++;
-    if(i>2){
+    if(i>3){
         char* token = strtok(str, "\t");//converts the data in the line into tokens and returns the first token
         p.pnr = atoi(token);//the first token contains pnr which is stored in p.pnr
 
@@ -658,7 +658,7 @@ void updatePinfo(struct passenger p, char filename[]){
 	char str[100], buffer[100];//buffers to copy file lines into
 	while(fgets(str, 99, fp1)){
 		i++;
-        if(i>2){
+        if(i>3){
             strcpy(buffer, str);
 		    char* token = strtok(str, "\t");
 		    q.pnr = atoi(token);//stores the pnr of the line being read to struct q
@@ -666,6 +666,9 @@ void updatePinfo(struct passenger p, char filename[]){
     		if(q.pnr!=p.pnr){//writes the line into temp.txt if q.pnr does not match pnr of cancelled ticket
 	    		fputs(buffer, fp2);
 		    }
+        }
+        else{
+            fputs(str,fp2);
         }
         
 	}

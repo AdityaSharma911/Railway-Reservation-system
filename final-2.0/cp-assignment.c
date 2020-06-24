@@ -230,15 +230,21 @@ void seatsdec(int sno,int tcdec){
 
 
                     //making sure available seats data occupy 3 spaces and updated available seats stored in the spaces
-                    if(tcav<10){
-                        fprintf(fp2,"%d%d",00);
+                    if(tcav==0){
+                        fprintf(fp2,"000%s","\n");
                     }
                     else{
-                        if(tcav<100){
-                            fprintf(fp2,"%d",0);
+                        if(tcav<10){
+                            fprintf(fp2,"00");
                         }
+                        else {
+                            if(tcav<100){
+                                fprintf(fp2,"0");
+                            }
+                        }
+                        fprintf(fp2,"%d%s",tcav,"\n");
                     }
-                    fprintf(fp2,"%d%s",tcav,"\n");
+                    
 
                 }
 
@@ -304,11 +310,11 @@ void seatsinc(int sno,int tcinc){
 
                     //making sure available seats data occupy 3 spaces and updated available seats stored in the spaces
                     if(tcav<10){
-                        fprintf(fp2,"%d%d",00);
+                        fprintf(fp2,"00");
                     }
                     else{
                         if(tcav<100){
-                            fprintf(fp2,"%d",0);
+                            fprintf(fp2,"0");
                         }
                     }
                     fprintf(fp2,"%d%s",tcav,"\n");
@@ -359,17 +365,21 @@ char str2[100];
 int ret,num;
 strcpy(str1,"delhi");
 printf("\n Enter the place from where you want to board:");
-gets(str2);
+scanf("%s",&str2);
 ret=strcmp(str2,str1);
 
-if(ret<0)
-printf("\n Sorry, No trains available");
-else if(ret>0)
-printf("\n Sorry, No trains available");
-else
-{
+if(ret==0){
     printf("\n Trains may be available!!! \n");
     printf("\n Note: Due to the Corona pandemic outbreak only general class tickets are available. \n \n");
+    printf("\n\nPress any key to view trains.");
+    getch();
+}
+else
+{
+    printf("\n Sorry, No trains available");
+    printf("\n\nPress any key to go to Main Menu..");
+    getch();
+    return;
 }
 
 	int i=0,charge;
@@ -380,14 +390,11 @@ else
 	system("cls");
 
 
-
-	//error here have to take input of the name
+    tinfo();
 	printf("\nEnter Number of seats:> ");
 	scanf("%d",&passdetails.num_of_seats);
-	printf("\n\n>>Press Enter To View Available Trains<< ");
-	system("cls");
 
-    tinfo();
+    
 	printf("\n\nEnter train number:> ");
 	start1:
 	scanf("%d",&passdetails.train_num);
@@ -477,56 +484,67 @@ for(int j=1;j<8;j++){
 fclose(fp);
 
 
-//opening file
-fp=fopen("data/pinfo.txt","a");
-
-
-//asking and printing passenger details
-printf("You have selected %s.\n",t[sn].tname);
-printf("Fare per person is:%d \n",t[sn].fpp);
-    charge=passdetails.num_of_seats*t[sn].fpp;
-    charges=t[sn].fpp;
-    printf("The total fare is :%d",charge);
-	passdetails.pnr=pnrassigner(sn);
-	for(i=0;i<passdetails.num_of_seats;i++)
-    {
-        printf("\nEnter the Name of Passenger[%d]:> ",i+1);
-        fflush(stdin);
-        gets(passdetails.name);
-        printf("Gender(M/F):");
-        scanf("%c",&passdetails.gender);
-        printf("Your PNR is: %d",passdetails.pnr);
-        fprintf(fp,"%d\t%s\t%c\t%d\t%.2f\n",passdetails.pnr,passdetails.name,passdetails.gender,passdetails.train_num,charges);
-        passdetails.pnr++;
-	}
-
-    printf("\n\nConfirm Ticket (y/n):>");
-    scanf(" %c",&confirm);
-	if(confirm == 'y')
-	{
-		printf("==================");
-		printf("\n Reservation Done\n");
-		printf("==================");
-		ainfo();
-	}
-
-	else
-	{		if(confirm=='n'){
-			printf("\nReservation Not Done!\n");
-		}
-		else
-		{
-			printf("\nInvalid choice entered! Enter again-----> ");
-
-		}
-	}
-	fclose(fp);
-
-    //decreasing seats
-    seatsdec(sn,passdetails.num_of_seats);
-
+//seats availability check
+if(t[sn].tseats<passdetails.num_of_seats){
+    printf("%d seats are not available in this train. Please check availability.", passdetails.num_of_seats);
     printf("\n\nPress any key to go to Main Menu..");
     getch();
+}
+else{
+    //opening file
+    fp=fopen("data/pinfo.txt","a");
+
+
+    //asking and printing passenger details
+    printf("You have selected %s\n",t[sn].tname);
+    printf("Fare per person is:%d \n",t[sn].fpp);
+        charge=passdetails.num_of_seats*t[sn].fpp;
+        charges=t[sn].fpp;
+        printf("The total fare is :%d",charge);
+	    passdetails.pnr=pnrassigner(sn);
+	    for(i=0;i<passdetails.num_of_seats;i++)
+        {
+            printf("\nEnter the Name of Passenger[%d]:> ",i+1);
+            fflush(stdin);
+            gets(passdetails.name);
+            printf("Gender(M/F):");
+            scanf("%c",&passdetails.gender);
+            printf("Your PNR is: %d",passdetails.pnr);
+            fprintf(fp,"%d\t%s\t%c\t%d\t%.2f\n",passdetails.pnr,passdetails.name,passdetails.gender,passdetails.train_num,charges);
+            passdetails.pnr++;
+	    }
+
+        printf("\n\nConfirm Ticket (y/n):>");
+        scanf(" %c",&confirm);
+	    if(confirm == 'y')
+	    {
+	    	printf("==================");
+	    	printf("\n Reservation Done\n");
+		    printf("==================");
+		    ainfo();
+	    }
+
+	    else
+	    {	if(confirm=='n')
+            {
+		    	printf("\nReservation Not Done!\n");
+		    }
+		    else
+		    {
+		    	printf("\nInvalid choice entered! Enter again-----> ");
+
+    		}
+	    }
+	    fclose(fp);
+
+        //decreasing seats
+        seatsdec(sn,passdetails.num_of_seats);
+
+        printf("\n\nPress any key to go to Main Menu..");
+        getch();
+}
+
+
 }
 
 
@@ -548,7 +566,8 @@ void updatePinfo(struct passenger p, char filename[]);//removes entry from pinfo
 
 void cancel(void){
 	int InputTrainNo;
-	tinfo();
+	system("cls");
+    tinfo();
 	printf("\nEnter train no: ");
 	scanf("%d", &InputTrainNo);
 	int srNo;
@@ -566,8 +585,10 @@ void cancel(void){
 	}else{
 		updatePinfo(p, filename);//ticket entry removed from pinfo.txt
 		printf("YOU HAVE SUCCESSFULLY CANCELLED A TICKET!\nREFUNDED AMOUNT: %.2f\n", (float)p.cost/2);//shows refunded amount
-		getch();//holds screen
 		seatsinc(srNo, 1);//increments a seat
+        printf("\n\nPress any key to go to Main Menu..");
+        getch();//holds screen
+		
 	}
 }
 
@@ -598,28 +619,33 @@ int getSrNo(int InputTrainNo){
 struct passenger getCancelledTicketData(int pnr, char filename[]){
 	FILE *fp = fopen(filename,"r");//opens file containing passenger data
 	struct passenger p;
+    int i=0;
 	char str[100];//buffer to store lines from pinfo.txt
 	while(fgets(str,99,fp)){//gets lines from pinfo.txt until loop breaks
-    char* token = strtok(str, "\t");//converts the data in the line into tokens and returns the first token
-    p.pnr = atoi(token);//the first token contains pnr which is stored in p.pnr
+    i++;
+    if(i>2){
+        char* token = strtok(str, "\t");//converts the data in the line into tokens and returns the first token
+        p.pnr = atoi(token);//the first token contains pnr which is stored in p.pnr
 
-    token = strtok(NULL, "\t"); //gives next token which contains the name
-	strcpy(p.name,token);
+        token = strtok(NULL, "\t"); //gives next token which contains the name
+	    strcpy(p.name,token);
 
-    token = strtok(NULL, "\t"); //gives next token which contains the gender
-	p.gender=token[0];
+        token = strtok(NULL, "\t"); //gives next token which contains the gender
+	    p.gender=token[0];
 
-    token = strtok(NULL, "\t"); //gives next token which contains the train number
-	p.trainno = atoi(token);
+        token = strtok(NULL, "\t"); //gives next token which contains the train number
+	    p.trainno = atoi(token);
 
-    token = strtok(NULL, "\t"); //gives next token which contains the price of ticket
-	p.cost = atoi(token);
+        token = strtok(NULL, "\t"); //gives next token which contains the price of ticket
+    	p.cost = atoi(token);
 
-	if(pnr==p.pnr){ //if p.pnr matches the pnr of the ticket to cancel, returns the struct p containing all its data
+	    if(pnr==p.pnr){ //if p.pnr matches the pnr of the ticket to cancel, returns the struct p containing all its data
 			fclose(fp);
 			return p;
-	}
-	}
+        }
+    }
+
+    }
 	p.pnr=-1;//if pnr input by user is not present in pinfo.txt, returns p.pnr = -1 to show error
 	return p;
 }
@@ -628,15 +654,20 @@ void updatePinfo(struct passenger p, char filename[]){
 	FILE *fp1 = fopen(filename,"r");
 	FILE *fp2 = fopen("./data/temp.txt","w");//new file opened to store all ticket data except the cancelled ticket
 	struct passenger q;
+    int i=0;
 	char str[100], buffer[100];//buffers to copy file lines into
 	while(fgets(str, 99, fp1)){
-		strcpy(buffer, str);
-		char* token = strtok(str, "\t");
-		q.pnr = atoi(token);//stores the pnr of the line being read to struct q
+		i++;
+        if(i>2){
+            strcpy(buffer, str);
+		    char* token = strtok(str, "\t");
+		    q.pnr = atoi(token);//stores the pnr of the line being read to struct q
 
-		if(q.pnr!=p.pnr){//writes the line into temp.txt if q.pnr does not match pnr of cancelled ticket
-			fputs(buffer, fp2);
-		}
+    		if(q.pnr!=p.pnr){//writes the line into temp.txt if q.pnr does not match pnr of cancelled ticket
+	    		fputs(buffer, fp2);
+		    }
+        }
+        
 	}
 	fclose(fp1);
 	fclose(fp2);
@@ -676,10 +707,10 @@ switch(menu_choice)
 		case 2:
 			tinfo();
 			printf("\n\nPress any key to go to Main Menu..");
-            getch();//holds the screen
+            getch();
 			break;
 		case 3:
-		 	cancel();
+            cancel();
 		 	break;
 		case 4:
 			return(0);

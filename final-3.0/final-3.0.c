@@ -118,16 +118,9 @@ void login()
     printf(" \n                       ENTER USERNAME:-");
 	scanf("%s", uname);
 	printf(" \n                       ENTER PASSWORD:-");
+  scanf("%s", pword);
   getchar();
-	while(i<10)
-	{
-      pword[i]=getchar();
-	    c=pword[i];
-	    if(c=='\n') break;
-	    else printf("*");
-	    i++;
-	}
-	pword[i]='\0';
+	// pword[i]='\0';
 	//char code=pword;
 	i=0;
 	//scanf("%s",&pword);
@@ -385,7 +378,6 @@ else
 }
 
 	int i=0,charge;
-	char confirm;
 	float charges;
 	pd passdetails;
 	FILE *fp;
@@ -397,7 +389,7 @@ else
 	scanf("%d",&passdetails.num_of_seats);
 
     
-	printf("\n\nEnter train number:> ");
+	printf("\nEnter train number:> ");
 	start1:
 	scanf("%d",&passdetails.train_num);
 	passdetails.pnr=0;
@@ -491,22 +483,23 @@ if(t[sn].tseats<passdetails.num_of_seats){
     printf("%d seats are not available in this train. Please check availability.", passdetails.num_of_seats);
     printf("\n\nPress any key to go to Main Menu..");
     getchar();
+    getchar();
 }
 else{
     //opening file
-    fp=fopen("data/pinfo.txt","a");
+    fp=fopen("data/temp.txt","w");
 
 
     //asking and printing passenger details
-    printf("You have selected %s\n",t[sn].tname);
+    printf("\nYou have selected %s\n",t[sn].tname);
     printf("Fare per person is:%d \n",t[sn].fpp);
         charge=passdetails.num_of_seats*t[sn].fpp;
         charges=t[sn].fpp;
         printf("The total fare is :%d",charge);
 	    passdetails.pnr=pnrassigner(sn);
-      getchar();
 	    for(i=0;i<passdetails.num_of_seats;i++)
         {
+            getchar();
             printf("\nEnter the Name of Passenger[%d]:> ",i+1);
             fflush(stdin);
             gets(passdetails.name);
@@ -516,34 +509,20 @@ else{
             fprintf(fp,"%d\t%s\t%c\t%d\t%.2f\n",passdetails.pnr,passdetails.name,passdetails.gender,passdetails.train_num,charges);
             passdetails.pnr++;
 	    }
-
-        printf("\n\nConfirm Ticket (y/n):>");
-        scanf(" %c",&confirm);
-	    if(confirm == 'y')
-	    {
-	    	printf("==================");
-	    	printf("\n Reservation Done\n");
-		    printf("==================");
-		    ainfo();
-	    }
-
-	    else
-	    {	if(confirm=='n')
-            {
-		    	printf("\nReservation Not Done!\n");
-		    }
-		    else
-		    {
-		    	printf("\nInvalid choice entered! Enter again-----> ");
-
-    		}
-	    }
-	    fclose(fp);
+        fclose(fp);
+        
+        
+        printf("\n==================");
+        printf("\n Reservation Done\n");
+        printf("==================\n");
+        ainfo();
 
         //decreasing seats
         seatsdec(sn,passdetails.num_of_seats);
 
+        
         printf("\n\nPress any key to go to Main Menu..");
+        getchar();
         getchar();
 }
 
@@ -838,6 +817,7 @@ switch(menu_choice)
 		 	break;
 		case 4:
 			return(0);
+            system("clear");
 		default:
 			printf("\nInvalid choice");
 }
